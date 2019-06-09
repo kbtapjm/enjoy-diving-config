@@ -1,24 +1,8 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.21.RELEASE'
-	}
-}
+description 'enjoy-diving-config module project'
 
-plugins {
-	id 'java'
-}
-
-apply plugin: 'org.springframework.boot'
-
-group = 'kr.co.pjm.diving'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-	mavenCentral()
+jar {
+    baseName = 'enjoy-diving-config'
+    version = '0.0.1-SNAPSHOT'
 }
 
 ext {
@@ -26,13 +10,18 @@ ext {
 }
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-actuator'
-	compile 'org.springframework.cloud:spring-cloud-config-server'
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	compile project(':enjoy-diving-common')
+	
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-config-server', version: '1.4.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${springBootVersion}"
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+
+bootRepackage {
+    mainClass = 'kr.co.pjm.diving.config.Application'
 }
